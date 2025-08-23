@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>W3grads - Your Path to Success</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+        :root {
+            --primary-bg: #0f172a;
+            --accent-color: #80D0C7;
+            --glass-bg: rgba(255, 255, 255, 0.15);
+            --glass-border: rgba(255, 255, 255, 0.3);
+            --font-color: #f0f4f8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--font-color);
+            background-color: var(--primary-bg);
+            overflow-x: hidden;
+        }
+
+        /* Glassmorphism Effect */
+        .glass-container {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        /* Parallax Container */
+        .parallax-wrapper {
+            height: 100vh;
+            overflow-x: hidden;
+            overflow-y: auto;
+            perspective: 1px;
+            scroll-snap-type: y mandatory;
+        }
+
+        .parallax-layer {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            transform-origin: left top;
+        }
+
+        .bg-layer {
+    background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwLQyi6WvXqdH-FLqXMF5kzmyMYtbirbPHjQ&s');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1; /* keep it behind content */
+    transform: none; /* remove parallax scale */
+}
+
+
+        .middle-layer {
+            background-color: rgba(0, 0, 0, 0.1);
+            transform: translateZ(-0.5px) scale(1.5);
+        }
+
+        .top-layer {
+            transform: translateZ(0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Navigation Bar */
+        .header {
+            position: fixed;
+            top: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 95%;
+            max-width: 1200px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 2.5rem;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: var(--font-color);
+        }
+
+        .nav-menu ul {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-menu ul li {
+            margin: 0 1.5rem;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: var(--font-color);
+            font-weight: 400;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            width: 0;
+            height: 2px;
+            background: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-menu a:hover::after,
+        .nav-menu a.active::after {
+            width: 100%;
+        }
+
+        .login-btn {
+            background-color: var(--accent-color);
+            color: var(--primary-bg);
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(128, 208, 199, 0.4);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            text-align: center;
+            padding: 4rem;
+            max-width: 900px;
+            width: 90%;
+            border-radius: 20px;
+        }
+
+        .hero-section h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        .hero-section p {
+            font-size: 1.2rem;
+            font-weight: 300;
+            margin-bottom: 2.5rem;
+        }
+
+        .cta-button {
+            padding: 1rem 2.5rem;
+            background: linear-gradient(45deg, #80D0C7, #0093E9);
+            border: none;
+            border-radius: 50px;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .cta-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Content Sections */
+        .content-section {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 5rem 0;
+            scroll-snap-align: start;
+        }
+
+        .content-section h2 {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            width: 90%;
+        }
+
+        .course-card {
+            text-align: center;
+            padding: 3rem 2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .course-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .course-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+        
+        .course-card p {
+            font-size: 1rem;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 3rem 1rem;
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header glass-container">
+        <div class="logo">W3grads</div>
+        <nav class="nav-menu">
+            <ul>
+                <li><a href="#home" class="active">Home</a></li>
+                <li><a href="#courses">Courses</a></li>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="#careers">Careers</a></li>
+            </ul>
+        </nav>
+        <a href="#login" class="login-btn">Login</a>
+    </header>
+
+    <div class="parallax-wrapper">
+        <div id="home" class="parallax-layer bg-layer"></div>
+        <div class="parallax-layer middle-layer"></div>
+        <div class="parallax-layer top-layer">
+            <section class="hero-section glass-container">
+                <h1>Bridging the Gap from Learner to Leader.</h1>
+                <p>Gain the skills and confidence to thrive in today's competitive job market with our industry-led courses.</p>
+                <a href="#courses" class="cta-button">Explore Courses</a>
+            </section>
+        </div>
+    </div>
+
+    <section id="courses" class="content-section">
+        <div class="course-grid">
+            <div class="glass-container course-card">
+                <h3>Web Development</h3>
+                <p>Master modern web technologies with our hands-on projects and expert-led curriculum.</p>
+            </div>
+            <div class="glass-container course-card">
+                <h3>Data Science & AI</h3>
+                <p>From Python basics to advanced machine learning, become a data-driven professional.</p>
+            </div>
+            <div class="glass-container course-card">
+                <h3>Mobile App Development</h3>
+                <p>Learn to build native and cross-platform mobile apps for iOS and Android.</p>
+            </div>
+            <div class="glass-container course-card">
+                <h3>Cybersecurity</h3>
+                <p>Defend against digital threats and learn the essentials of network and data security.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="content-section">
+        <div class="glass-container" style="padding: 4rem; text-align: center;">
+            <h2>About W3grads</h2>
+            <p style="max-width: 800px;">We are dedicated to providing high-quality, practical education that prepares students for real-world challenges. Our team of experienced instructors and mentors are here to guide you every step of the way.</p>
+        </div>
+    </section>
+
+    <section id="contact" class="content-section">
+        <div class="glass-container" style="padding: 4rem; text-align: center;">
+            <h2>Get in Touch</h2>
+            <p>Have questions? We're here to help. Reach out to us through our contact form or social media channels.</p>
+        </div>
+    </section>
+
+    <section id="careers" class="content-section">
+        <div class="glass-container" style="padding: 4rem; text-align: center;">
+            <h2>Careers at W3grads</h2>
+            <p>Join our mission to revolutionize education. We're always looking for passionate educators and professionals to join our team.</p>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p>&copy; 2025 W3grads. All Rights Reserved.</p>
+    </footer>
+
+</body>
+</html>

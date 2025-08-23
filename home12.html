@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>W3grads - Your Path to Success</title>
+    <style>
+        /* Import a clean, modern font */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+        /* Color Palette and Global Styles */
+        :root {
+            --light-bg: #e0e7ff;
+            --main-text-color: #1f2937;
+            --secondary-text-color: #4b5563;
+            --accent-color: #4c51bf;
+            --accent-hover: #667eea;
+            --glass-bg-light: rgba(255, 255, 255, 0.5);
+            --glass-border-light: rgba(255, 255, 255, 0.8);
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease-in-out;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            color: var(--main-text-color);
+            overflow-x: hidden;
+        }
+
+        /* Glassmorphism Effect */
+        .glass-container {
+            background: var(--glass-bg-light);
+            border: 1px solid var(--glass-border-light);
+            backdrop-filter: blur(10px) saturate(150%);
+            -webkit-backdrop-filter: blur(10px) saturate(150%);
+            border-radius: 16px;
+            box-shadow: 0 4px 30px var(--shadow);
+        }
+
+        /* Parallax Wrapper */
+        .parallax-wrapper {
+            height: 100vh;
+            overflow-x: hidden;
+            overflow-y: scroll;
+            perspective: 1px;
+            scroll-snap-type: y mandatory;
+        }
+
+        .parallax-layer {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            transform-origin: center center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .bg-layer {
+            background-image: url('https://png.pngtree.com/thumb_back/fh260/background/20230716/pngtree-digital-learning-exploring-education-with-online-libraries-and-laptops-3d-illustration-image_3860217.jpg');
+            background-size: cover;
+            background-position: center;
+            transform: translateZ(-1px) scale(2);
+        }
+
+        .hero-text-layer {
+            transform: translateZ(0);
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            position: fixed;
+            top: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 95%;
+            max-width: 1300px;
+            padding: 1rem 2rem;
+            z-index: 100;
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: var(--main-text-color);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin: 0 1rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--secondary-text-color);
+            font-weight: 500;
+            padding: 0.5rem 0.2rem;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .sign-in-btn {
+            background-color: var(--accent-color);
+            color: #fff;
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px;
+            text-decoration: none;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(76, 81, 191, 0.3);
+        }
+        
+        .sign-in-btn:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(76, 81, 191, 0.4);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            text-align: center;
+            max-width: 900px;
+            padding: 4rem;
+            
+        }
+        
+        .hero-section h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        .hero-section p {
+            font-size: 1.25rem;
+            font-weight: 300;
+            margin-bottom: 2.5rem;
+            color: var(--secondary-text-color);
+        }
+
+        .cta-button {
+            background: var(--accent-color);
+            color: #fff;
+            padding: 1rem 2.5rem;
+            border-radius: 9999px;
+            text-decoration: none;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(76, 81, 191, 0.3);
+        }
+
+        .cta-button:hover {
+            background: var(--accent-hover);
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(76, 81, 191, 0.4);
+        }
+
+        /* Email Subscription Section */
+        .email-updates-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 4rem;
+            max-width: 700px;
+        }
+
+        .email-updates-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .email-updates-section p {
+            font-size: 1rem;
+            color: var(--secondary-text-color);
+            margin-bottom: 2rem;
+        }
+
+        .email-form {
+            display: flex;
+            gap: 1rem;
+            width: 100%;
+        }
+
+        .email-form input {
+            flex-grow: 1;
+            padding: 1rem 1.5rem;
+            border: 1px solid #ccc;
+            border-radius: 9999px;
+            font-size: 1rem;
+            background: rgba(255, 255, 255, 0.7);
+        }
+        
+        .email-form input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(76, 81, 191, 0.2);
+        }
+
+        .subscribe-btn {
+            background-color: var(--accent-color);
+            color: #fff;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 9999px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .subscribe-btn:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-2px);
+        }
+
+        /* Content Sections */
+        .content-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 5rem 0;
+            scroll-snap-align: start;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            width: 90%;
+        }
+
+        .card {
+            padding: 2.5rem;
+            text-align: center;
+            transform: scale(1);
+        }
+
+        .card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .card p {
+            color: var(--secondary-text-color);
+            font-size: 0.95rem;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            background-color: var(--glass-bg-light);
+            border-top: 1px solid var(--glass-border-light);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .nav-links {
+                display: none;
+            }
+            .hero-section h1 {
+                font-size: 3rem;
+            }
+        }
+        @media (max-width: 768px) {
+            .hero-section h1 {
+                font-size: 2.5rem;
+            }
+            .email-form {
+                flex-direction: column;
+            }
+            .subscribe-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="navbar glass-container">
+        <div class="nav-content">
+            <a href="#" class="logo">W3grads</a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#home" class="active">Home</a></li>
+                    <li><a href="#compilers">Compilers</a></li>
+                    <li><a href="#tutorials">Tutorials</a></li>
+                    <li><a href="#programs">Programs</a></li>
+                    <li><a href="#blog">Blog</a></li>
+                    <li><a href="#careers">Careers</a></li>
+                    <li><a href="#ambassadors">Ambassadors</a></li>
+                </ul>
+            </nav>
+            <a href="#signin" class="sign-in-btn">Sign In</a>
+        </div>
+    </header>
+
+    <div class="parallax-wrapper">
+        <!-- Parallax Background Layer -->
+        <div id="home" class="parallax-layer bg-layer"></div>
+        
+        <!-- Hero Content Layer (Topmost) -->
+        <div class="parallax-layer hero-text-layer">
+            <section class="hero-section glass-container">
+                <h1>Unlock Your Potential, Master New Skills.</h1>
+                <p>W3grads is your all-in-one platform for coding, career development, and community. Start your journey with us today.</p>
+                <a href="#programs" class="cta-button">Explore Training Programs</a>
+            </section>
+        </div>
+    </div>
+
+    <!-- Content Section 1: Compilers & Tutorials -->
+    <section id="compilers" class="content-section">
+        <div class="cards-grid">
+            <div class="card glass-container">
+                <h3>Online Compilers</h3>
+                <p>Run code instantly in your browser with our powerful online compilers for multiple languages.</p>
+            </div>
+            <div id="tutorials" class="card glass-container">
+                <h3>Interactive Tutorials</h3>
+                <p>Learn new technologies and programming concepts with guided, hands-on tutorials.</p>
+            </div>
+            <div id="programs" class="card glass-container">
+                <h3>Training Programs</h3>
+                <p>Join our comprehensive training programs to become job-ready in months, not years.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Content Section 2: Blog & Careers -->
+    <section id="blog" class="content-section">
+        <div class="cards-grid">
+            <div class="card glass-container">
+                <h3>Latest Blog Posts</h3>
+                <p>Stay up to date with the latest industry trends, tech news, and career advice from our experts.</p>
+            </div>
+            <div id="careers" class="card glass-container">
+                <h3>Careers at W3grads</h3>
+                <p>Join our team and help us build the future of education. Check out our open positions.</p>
+            </div>
+            <div id="ambassadors" class="card glass-container">
+                <h3>Our Ambassadors</h3>
+                <p>Meet our community of successful students and professionals who represent the W3grads mission.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Content Section 3: Email Subscription -->
+    <section class="content-section">
+        <div class="email-updates-section glass-container">
+            <h2>Get the Latest Updates & Offers</h2>
+            <p>Subscribe to our newsletter to receive exclusive offers, new course announcements, and free content directly to your inbox.</p>
+            <form class="email-form" action="#" method="post">
+                <input type="email" placeholder="Enter your email address" required>
+                <button type="submit" class="subscribe-btn">Subscribe</button>
+            </form>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p>&copy; 2025 W3grads. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>

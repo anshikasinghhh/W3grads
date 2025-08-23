@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Placement Assistance - W3Grads</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        /* =================================== */
+        /* === CORE STYLES (From Original) === */
+        /* =================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: #ffffff;
+            color: #1a1a1a;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            background: rgba(228, 248, 255, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            padding: 0.5rem 0;
+            transition: all 0.4s ease;
+            border-bottom: 1px solid rgba(59, 130, 246, 0.08);
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.15), 0 0 10px rgba(59, 130, 246, 0.2);
+            border-radius: 20px;
+        }
+        .nav-container {
+            width: 100%;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 25px;
+        }
+        .logo img {
+            height: 40px;
+        }
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 3rem;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: #6b7280;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #3b82f6;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #3b82f6;
+            transition: width 0.3s ease;
+        }
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+        .login-btn {
+            background: #3b82f6;
+            color: white;
+            padding: 0.7rem 1.8rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            border: none;
+        }
+        .login-btn:hover {
+            background: #2563eb;
+            transform: translateY(-1px);
+        }
+
+        /* Footer */
+        .footer {
+            background: #001f3f;
+            color: #fff;
+            padding: 100px 20px 20px;
+            position: relative;
+            margin-top: 60px;
+        }
+        .subscribe-box {
+            background-color: #dfeaff;
+            padding: 20px;
+            text-align: center;
+            border-radius: 50px;
+            color: #001f3f;
+            width: 900px;
+            height: 170px;
+            top: -80px;
+            left: 50%;
+            transform: translateX(-50%);
+            position: absolute;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        }
+        .subscribe-box h3 {
+            margin-bottom: 10px;
+            color: #1565c0;
+            font-size: 1.5rem;
+        }
+        .subscribe-form {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        .subscribe-form input {
+            padding: 10px;
+            width: 500px;
+            border: none;
+            height: 70px;
+            border-radius: 50px;
+        }
+        .subscribe-form button {
+            padding: 10px 20px;
+            background: #3b82f6;
+            color: #fff;
+            border: none;
+            height: 70px;
+            width: 200px;
+            border-radius: 50px;
+            cursor: pointer;
+        }
+        .footer-container {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr 1fr;
+            gap: 30px;
+            padding: 40px 60px;
+        }
+        .footer-about h2 {
+            color: #fff;
+            margin-bottom: 10px;
+        }
+        .footer-links h3, .footer-contact h3 {
+            color: #fff;
+            margin-bottom: 15px;
+        }
+        .footer-links ul {
+            list-style: none;
+            padding: 0;
+        }
+        .footer-links ul li {
+            margin-bottom: 8px;
+        }
+        .footer-links ul li a {
+            color: #fff;
+            text-decoration: none;
+        }
+        .footer-contact p {
+            margin-bottom: 12px;
+        }
+        .social-icons a {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 45px;
+            height: 45px;
+            margin-right: 10px;
+            color: #fff;
+            border-radius: 50%;
+            font-size: 20px;
+            text-decoration: none;
+            transition: transform 0.3s ease;
+        }
+        .social-icons a:hover {
+            transform: scale(1.1);
+        }
+        .footer-about .footer-logo {
+            width: 100px;
+            height: auto;
+            margin-bottom: 10px;
+        }
+        .footer-bottom {
+            background: #001533;
+            text-align: center;
+            padding: 15px;
+            font-size: 14px;
+        }
+
+        /* Section Header Styling */
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 1rem;
+            letter-spacing: -1px;
+        }
+        .section-header .highlight {
+            color: #3b82f6;
+        }
+        .section-header p {
+            color: #6b7280;
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+
+        /* ===================================== */
+        /* === NEW STYLES: PLACEMENT PAGE === */
+        /* ===================================== */
+        
+        /* Placement Hero Section */
+        .placement-hero {
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 150px 20px 50px;
+            background: linear-gradient(135deg, rgba(240, 245, 255, 0.8), rgba(255, 255, 255, 0.9)), url('https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=2084&auto=format&fit=crop') no-repeat center center;
+            background-size: cover;
+        }
+        .placement-hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            max-width: 800px;
+            margin: 0 auto 1rem;
+        }
+        .placement-hero p {
+            font-size: 1.2rem;
+            color: #6b7280;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Placement Process Section */
+        .process-section {
+            padding: 80px 0;
+            background-color: #f8fafc;
+        }
+        .process-timeline {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            position: relative;
+            margin-top: 4rem;
+        }
+        .process-step {
+            text-align: center;
+            padding: 2rem;
+            background: #ffffff;
+            border-radius: 12px;
+            border: 1px solid #eef2f7;
+            transition: all 0.3s ease;
+        }
+        .process-step:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
+        }
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: #eef6ff;
+            color: #3b82f6;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 0 auto 1.5rem;
+            border: 2px solid #3b82f6;
+        }
+        .process-step h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+            color: #1a1a1a;
+        }
+        .process-step p {
+            font-size: 0.95rem;
+            color: #6b7280;
+        }
+
+        /* Hiring Partners Section */
+        .partners-section {
+            padding: 80px 0;
+        }
+        .logos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 2rem;
+            align-items: center;
+        }
+        .partner-logo {
+            text-align: center;
+            filter: grayscale(100%);
+            opacity: 0.6;
+            transition: all 0.3s ease;
+        }
+        .partner-logo:hover {
+            filter: grayscale(0%);
+            opacity: 1;
+            transform: scale(1.1);
+        }
+        .partner-logo img {
+            max-width: 120px;
+            height: auto;
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            padding: 80px 0;
+            background-color: #f8fafc;
+        }
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .faq-item {
+            background: #ffffff;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border: 1px solid #eef2f7;
+            overflow: hidden;
+        }
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            color: #1a1a1a;
+        }
+        .faq-question i {
+            transition: transform 0.3s ease;
+        }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, padding 0.5s ease;
+        }
+        .faq-answer p {
+            padding: 0 1.5rem 1.5rem;
+            color: #6b7280;
+        }
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+        .faq-item.active .faq-answer {
+            max-height: 200px; /* Adjust as needed */
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            padding: 60px 20px;
+            text-align: center;
+            background: #001f3f;
+            color: white;
+        }
+        .cta-section h2 {
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+        }
+        .cta-section p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            color: #e0e0e0;
+        }
+        .cta-btn {
+            background: #3b82f6;
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        .cta-btn:hover {
+            background: #2563eb;
+            transform: translateY(-2px);
+        }
+
+
+        /* Responsive Adjustments */
+        @media (max-width: 992px) {
+            .subscribe-box {
+                width: 90%;
+            }
+            .footer-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .footer-about, .footer-links, .footer-contact {
+                margin-bottom: 20px;
+            }
+        }
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .placement-hero h1 { font-size: 2.5rem; }
+            .subscribe-form { flex-direction: column; align-items: center; }
+            .subscribe-form input, .subscribe-form button { width: 100%; max-width: 400px; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <img src="Screenshot 2025-08-13 010706.png" alt="W3Grads Logo">
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#">Courses</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="placement.html" class="active">Placement Assistance</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+            <a href="#login" class="login-btn">Login/Register</a>
+        </div>
+    </nav>
+
+    <section class="placement-hero" id="placement-home">
+        <div class="container">
+            <h1>Launch Your Tech Career with Our <span class="highlight">Placement Assistance</span></h1>
+            <p>We're committed to not just educating you, but also helping you secure a rewarding position in the tech industry.</p>
+        </div>
+    </section>
+
+    <section class="process-section" id="process">
+        <div class="container">
+            <div class="section-header">
+                <h2>Your Journey to a <span class="highlight">Dream Job</span></h2>
+                <p>We provide a structured pathway to ensure you are fully prepared for the competitive job market.</p>
+            </div>
+            <div class="process-timeline">
+                <div class="process-step">
+                    <div class="step-number">1</div>
+                    <h3>Career Counseling</h3>
+                    <p>Personalized sessions to identify your strengths and career goals.</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">2</div>
+                    <h3>Resume Building</h3>
+                    <p>Crafting a professional resume that stands out to recruiters.</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">3</div>
+                    <h3>Mock Interviews</h3>
+                    <p>Practice interviews with industry experts to build your confidence.</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">4</div>
+                    <h3>Job Matching</h3>
+                    <p>Connecting you with exclusive opportunities from our network of hiring partners.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="partners-section" id="partners">
+        <div class="container">
+            <div class="section-header">
+                <h2>Our <span class="highlight">Hiring Partners</span></h2>
+                <p>We have strong ties with leading companies in the tech industry who trust and hire our graduates.</p>
+            </div>
+            <div class="logos-grid">
+                <div class="partner-logo"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/1200px-Google_2015_logo.svg.png" alt="Google Logo"></div>
+                <div class="partner-logo"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/1200px-Amazon_logo.svg.png" alt="Amazon Logo"></div>
+                <div class="partner-logo"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Microsoft_logo_%282012%29.svg/1200px-Microsoft_logo_%282012%29.svg.png" alt="Microsoft Logo"></div>
+                <div class="partner-logo"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/TCS_logo_blue.svg/1200px-TCS_logo_blue.svg.png" alt="TCS Logo"></div>
+                <div class="partner-logo"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Infosys_logo.svg/1200px-Infosys_logo.svg.png" alt="Infosys Logo"></div>
+                <div class="partner-logo"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Wipro_Primary_Logo_Color_RGB.svg/1200px-Wipro_Primary_Logo_Color_RGB.svg.png" alt="Wipro Logo"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="faq-section" id="faq">
+        <div class="container">
+            <div class="section-header">
+                <h2>Frequently <span class="highlight">Asked Questions</span></h2>
+                <p>Find answers to common questions about our placement assistance program.</p>
+            </div>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Is placement guaranteed?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We provide 100% placement assistance, which includes preparing you for interviews and connecting you with hiring partners. While we cannot guarantee a job, our dedicated support significantly increases your chances of getting hired. Your success ultimately depends on your performance in the interviews.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        What is the average salary package of placed students?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>The salary package depends on various factors like the company, job role, and the candidate's skills. However, our graduates have consistently secured competitive packages in the industry, ranging from entry-level to advanced positions.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Do I have to pay extra for placement assistance?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Our placement assistance program is an integral part of our professional courses and is included in the course fee. There are no hidden or extra charges for our placement support services.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="cta-section">
+        <div class="container">
+            <h2>Ready to Start Your Career Journey?</h2>
+            <p>Enroll in one of our courses today and take the first step towards a successful career in tech.</p>
+            <a href="#" class="cta-btn">Explore Courses</a>
+        </div>
+    </section>
+
+
+    <footer class="footer">
+        <div class="subscribe-box">
+            <h3>Subscribe to Our Newsletter</h3>
+            <div class="subscribe-form">
+                <input type="email" placeholder="Enter your email">
+                <button>Subscribe</button>
+            </div>
+        </div>
+        <div class="footer-container">
+            <div class="footer-about">
+                <h2><img src="Screenshot_2025-08-17_120314-removebg-preview.png" alt="W3 Grads Logo" class="footer-logo"></h2>
+                <p>We provide modern IT learning resources and career guidance to empower students and professionals in the tech industry.</p>
+            </div>
+            <div class="footer-links">
+                <h3>Useful Links</h3>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Courses</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-contact">
+                <h3>Contact Us</h3>
+                <p><i class="fas fa-map-marker-alt"></i> 123, Tech Park, New Delhi, India</p>
+                <p><i class="fas fa-phone"></i> +91 98765 43210</p>
+                <p><i class="fas fa-envelope"></i> info@w3grads.com</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 W3 Grads. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // FAQ Accordion
+        const faqItems = document.querySelectorAll('.faq-item');
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            question.addEventListener('click', () => {
+                const isActive = item.classList.contains('active');
+                faqItems.forEach(i => i.classList.remove('active'));
+                if (!isActive) {
+                    item.classList.add('active');
+                }
+            });
+        });
+
+    </script>
+</body>
+</html>
